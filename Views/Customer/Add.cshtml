@@ -1,0 +1,58 @@
+﻿@model SherDash.Models.Customer
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Customer</title>
+</head>
+<body>
+<div>
+    <h2>Customer:</h2>
+
+    <form asp-action="Add" method="post">
+        <label>Name</label><br />
+        <input asp-for="Name" /><br /><br />
+
+        <label>Contacts</label><br />
+        <div id="contact-list">
+            <div class="contact-item">
+                <input name="Contact[0].Name" placeholder="Contact Name" />
+                <input name="Contact[0].PhoneNumber" placeholder="Phone Number" />
+                <button type="button" onclick="removeContact(this)">Remove</button>
+            </div>
+        </div>
+
+        <button type="button" onclick="addContact()">Add Contact</button>
+        <br /><br />
+
+        <button type="submit">Add</button>
+    </form>
+</div>
+
+<script>
+    let contactIndex = 1;
+
+    function addContact() {
+        const container = document.getElementById("contact-list");
+
+        const item = document.createElement("div");
+        item.className = "contact-item";
+        item.innerHTML = `
+            <input name="Contact[${contactIndex}].Name" placeholder="Contact Name" />
+            <input name="Contact[${contactIndex}].PhoneNumber" placeholder="Phone Number" />
+            <button type="button" onclick="removeContact(this)">Remove</button>
+        `;
+        container.appendChild(item);
+        contactIndex++;
+    }
+
+    function removeContact(btn) {
+        btn.parentElement.remove();
+    }
+</script>
+</body>
+</html>

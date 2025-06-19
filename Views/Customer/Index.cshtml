@@ -1,0 +1,42 @@
+﻿@model List<Customer>
+
+<h2>Customers</h2>
+<a href="/Customer/Add">Add New</a>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.Id</td>
+            <td>@c.Name</td>
+            <td>@if (c.Contact != null && c.Contact.Any())
+                {
+                    <ul>@foreach (var contact in c.Contact)
+                        {
+                            <li>@contact.Name - @contact.PhoneNumber</li>
+                        }</ul>
+                }
+                else
+                {
+                    <em>No Contact</em>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<br/>
+
+<form asp-action="SomeAction" method="post">
+    <label>Select:</label>
+    <select asp-items="ViewBag.CustomerList" name="CustomerId"></select>
+    <button>Go</button>
+</form>
