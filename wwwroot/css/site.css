@@ -1,5 +1,26 @@
+:root {
+  --bg-dark: #1e1e2f;
+  --bg-surface: #2a2a3c;
+  --text-main: #ffffff;
+  --text-muted: #a0a0c0;
+  --border-color: #3e3e52;
+  --accent-purple: #c084fc;
+  --accent-hover: #a855f7;
+  --btn-bg: #6b21a8;
+  --btn-hover: #7e22ce;
+  --input-bg: #1f1f2e;
+}
+
 html {
   font-size: 14px;
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
 }
 
 @media (min-width: 768px) {
@@ -12,11 +33,15 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.btn {
+  background-color: var(--btn-bg);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
 }
 
-body {
-  margin-bottom: 60px;
+.btn:hover {
+  background-color: var(--btn-hover);
 }

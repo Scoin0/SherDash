@@ -1,34 +1,102 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using SherDash.Models;
+﻿using SherDash.Models;
 using SherDash.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SherDash.Controllers;
 
+[Route("customers")]
 public class CustomerController : Controller
 {
-    private JsonDataService<Customer> _service = new("customer.json");
+    private readonly JsonDataService<Customer> _service;
 
+    public CustomerController()
+    {
+        _service = new JsonDataService<Customer>("customer.json");
+    }
+    
+    [HttpGet("")]
     public IActionResult Index()
     {
         var customers = _service.LoadData();
         return View(customers);
     }
-
+    
+    [HttpGet("add")]
     public IActionResult Add()
     {
-        var customers = _service.LoadData();
-        ViewBag.CustomerList = new SelectList(customers, "Id", "Name");
+        ViewBag.CustomerList = GetCustomerSelectList();
         return View();
     }
-
-    [HttpPost]
+    
+    [HttpPost("add")]
+    [ValidateAntiForgeryToken]
     public IActionResult Add(Customer customer)
     {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.CustomerList = GetCustomerSelectList();
+            return View(customer);
+        }
+
         var list = _service.LoadData();
         customer.Id = _service.GetNextId(list);
         list.Add(customer);
         _service.SaveData(list);
-        return RedirectToAction("Index");
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    // POST: /customer/remove/
+    [HttpPost("remove/{id}")]
+    [ValidateAntiForgeryToken]
+    public IActionResult Remove(int id)
+    {
+        var list = _service.LoadData();
+        var customer = list.FirstOrDefault(c => c.Id == id);
+
+        if (customer != null)
+        {
+            list.Remove(customer);
+            _service.SaveData(list);
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+    
+    [HttpGet("edit/{id}")]
+    public IActionResult Edit(int id)
+    {
+        var customer = _service.LoadData().FirstOrDefault(c => c.Id == id);
+        if (customer == null)
+        {
+            return NotFound();
+        }
+
+        return View(customer);
+    }
+    
+    [HttpPost("edit")]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(Customer updatedCustomer)
+    {
+        if (!ModelState.IsValid)
+            return View(updatedCustomer);
+
+        var list = _service.LoadData();
+        var index = list.FindIndex(c => c.Id == updatedCustomer.Id);
+        if (index < 0)
+            return NotFound();
+
+        list[index] = updatedCustomer;
+        _service.SaveData(list);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    private SelectList GetCustomerSelectList()
+    {
+        var customers = _service.LoadData();
+        return new SelectList(customers, "Id", "Name");
     }
 }

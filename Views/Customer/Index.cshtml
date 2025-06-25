@@ -1,4 +1,6 @@
-﻿@model List<Customer>
+﻿@using SherDash.Controllers
+@using SherDash.Utils
+@model List<Customer>
 
 <h2>Customers</h2>
 <a href="/Customer/Add">Add New</a>
@@ -37,6 +39,11 @@
 
 <form asp-action="SomeAction" method="post">
     <label>Select:</label>
-    <select asp-items="ViewBag.CustomerList" name="CustomerId"></select>
+    <select name="size">
+        @foreach (var item in EnumUtil.GetSizeList())
+        {
+            <option value="@item.Value">@item.Display</option>
+        }
+    </select>
     <button>Go</button>
 </form>

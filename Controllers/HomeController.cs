@@ -4,6 +4,7 @@ using SherDash.Models;
 
 namespace SherDash.Controllers;
 
+
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -13,11 +14,11 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [HttpGet("")]
     public IActionResult Index()
     {
-        return View();
+        return RedirectToAction("Index", "Customer");
     }
-
     public IActionResult Privacy()
     {
         return View();
