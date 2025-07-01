@@ -1,0 +1,53 @@
+﻿@using SherDash.Utils
+@model Changelog
+
+@{
+    ViewData["Title"] = "Changelog";
+}
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<div class="form-container">
+    <h2>Add a Changelog Entry:</h2>
+    
+    <form asp-action="Add" method="post">
+        <div class="form-group">
+            <label>Version Number:</label>
+            <input asp-for="VersionNumber" class="form-control"/>
+        </div>
+        
+        <div id="entry-list">
+            <div class="entry-item">
+                <div class="form-row">
+                    <label>Entry:</label>
+                    <input name="Changes[0].Entry" placeholder="" class="form-control"/>
+                </div>
+                <div class="form-row">
+                    <label>Type:</label>
+                    <select name="Changes[0].ChangeType" class="form-control">
+                        @foreach (var item in EnumUtil.GetChangeTypeList())
+                        {
+                            <option value="@item.Value">@item.Display</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn-green" onclick="addEntry()">Add Entry</button>
+        <button type="submit" class="btn-small">Submit</button>
+    </form>
+</div>
+
+<div id="change-type-template" style="display: none;">
+    <select class="form-control">
+        @foreach (var item in EnumUtil.GetChangeTypeList())
+        {
+            <option value="@item.Value">@item.Display</option>
+        }
+    </select>
+</div>
+
+</body>
+</html>

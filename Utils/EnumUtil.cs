@@ -37,4 +37,12 @@ public static class EnumUtil
             .Select(d => (Value: d.ToString(), Display: d.GetDescription()))
             .ToList();
     }
+
+    public static List<(string Value, string Display)> GetChangeTypeList()
+    {
+        return Enum.GetValues(typeof(ChangeType))
+            .Cast<ChangeType>()
+            .Select(c => (Value: c.ToString(), Display: c.GetDescription()))
+            .ToList();
+    }
 }

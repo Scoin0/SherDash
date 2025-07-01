@@ -1,0 +1,22 @@
+﻿@model List<Changelog>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Sher-Changelog</title>
+</head>
+<body>
+<div>
+    @foreach (var c in Model)
+    {
+        <table><h2>v.@c.VersionNumber - @c.Date.ToShortDateString()</h2>
+        @foreach (var c2 in c.Changes)
+        {
+            <ul>@c2.ChangeType - @c2.Entry</ul>
+        }
+        </table>
+    }
+</div>
+</body>
+</html>

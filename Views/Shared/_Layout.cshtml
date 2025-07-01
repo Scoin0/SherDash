@@ -25,6 +25,19 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Announcement" asp-action="Index">Announcement</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn-dropdown">Customer</button>
+                            <div class="dropdown-content">
+                                <a href="">Add Customer</a>
+                                <a href="">Remove Customer</a>
+                                <a href="">Customer List</a>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -36,9 +49,9 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
+<footer class="footer text-muted">
     <div class="container">
-        &copy; 2025 - SherDash - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        Github | v2.0.0 | <a asp-area="" asp-controller="Changelog" asp-action="Index">Changelog</a>
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

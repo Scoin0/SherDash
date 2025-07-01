@@ -3,7 +3,7 @@
 @model List<Customer>
 
 <h2>Customers</h2>
-<a href="/Customer/Add">Add New</a>
+<a href="/customers/add">Add New</a>
 <table>
     <thead>
     <tr>
@@ -40,10 +40,11 @@
 <form asp-action="SomeAction" method="post">
     <label>Select:</label>
     <select name="size">
-        @foreach (var item in EnumUtil.GetSizeList())
+        @foreach (var item in EnumUtil.GetStatusList())
         {
             <option value="@item.Value">@item.Display</option>
         }
     </select>
-    <button>Go</button>
+    <button class="btn-small">Go</button>
+    <button class="btn-green">TEST</button>
 </form>
