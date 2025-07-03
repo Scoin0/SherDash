@@ -6,24 +6,25 @@ function addEntry() {
     const entryDiv = document.createElement("div");
     entryDiv.className = "entry-item";
 
-    // Create label + input
+    // Entry label + input
     const label = document.createElement("label");
     label.textContent = "Entry:";
 
     const input = document.createElement("input");
+    input.className = "form-control";
     input.name = `Changes[${entryIndex}].Entry`;
     input.placeholder = "Entry";
 
-    // Clone the hidden Razor-generated <select>
-    const template = document.getElementById("change-type-template");
-    const select = template.firstElementChild.cloneNode(true);
-    select.name = `Changes[${entryIndex}].ChangeType`;
-
-    // Create type label
+    // Type label + select
     const typeLabel = document.createElement("label");
     typeLabel.textContent = "Type:";
 
-    // Append all parts
+    const template = document.getElementById("change-type-template");
+    const select = template.firstElementChild.cloneNode(true);
+    select.name = `Changes[${entryIndex}].ChangeType`;
+    select.className = "form-control";
+
+    // Append all
     entryDiv.appendChild(label);
     entryDiv.appendChild(input);
     entryDiv.appendChild(typeLabel);

@@ -20,7 +20,7 @@ public class ChangelogController : Controller
     [HttpGet("")]
     public IActionResult Index()
     {
-        var changelog = _service.LoadData();
+        var changelog = _service.LoadData().OrderByDescending(c => c.Date).ToList();
         return View(changelog);
     }
     
@@ -29,7 +29,13 @@ public class ChangelogController : Controller
     public IActionResult Add()
     {
         ViewBag.ChangeType = new SelectList(EnumUtil.GetChangeTypeList(), "Value", "Description");
-        return View();
+
+        var changelog = new Changelog
+        {
+            Date = DateTime.Today
+        };
+        
+        return View(changelog);
     }
     
     // POST: /changelog/add
@@ -45,7 +51,6 @@ public class ChangelogController : Controller
 
         var log = _service.LoadData();
         changelog.Id = _service.GetNextId(log);
-        changelog.Date = DateTime.Now;
         
         log.Add(changelog);
         _service.SaveData(log);
@@ -55,6 +60,7 @@ public class ChangelogController : Controller
     
     // POST: /remove/{id}
     [HttpPost("remove/{id}")]
+    [ValidateAntiForgeryToken]
     public IActionResult Remove(int id)
     {
         var changelog = _service.LoadData();
